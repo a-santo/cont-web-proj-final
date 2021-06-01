@@ -1,0 +1,16 @@
+let express = require('express');
+let app = express();
+let port = 3000;
+
+app.set('view engine', 'pug');
+app.use(express.static("public"));
+
+app.get('/', function(req, res){
+    res.render('index');
+});
+
+app.get('/teste', function(req, res){
+    res.render('teste');
+});
+
+app.listen(port, () => console.log(`App listening on port ${port}`))

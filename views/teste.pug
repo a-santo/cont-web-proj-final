@@ -1,0 +1,43 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        div#tabela
+        script.
+            var tabledata = [
+                {
+                    nome: "Paragem B - Sul",
+                    autocarros: "612, 233, 56, 65, 2",
+                    estado: 3,
+                    update: "15 Mar, 8:56 (2021)"
+                },
+                {
+                    nome: "Paragem B - Norte",
+                    autocarros: "612, 233, 56, 65, 2",
+                    estado: 5,
+                    update: "12 Feb, 7:12 (2021)"
+                }
+            ];
+            let table = new Tabulator("#tabela", {
+                data: tabledata,           //load row data from array
+                layout: "fitColumns",      //fit columns to width of table
+                responsiveLayout: "hide",  //hide columns that dont fit on the table
+                tooltips: true,            //show tool tips on cells
+                addRowPos: "top",          //when adding a new row, add it to the top of the table
+                history: true,             //allow undo and redo actions on the table
+                pagination: "local",       //paginate the data
+                paginationSize: 7,         //allow 7 rows per page of data
+                movableColumns: true,      //allow column order to be changed
+                resizableRows: true,       //allow row order to be changed
+                initialSort: [             //set the initial sort order of the data
+                    {column: "nome", dir: "asc"},
+                ],
+                columns: [                 //define the table columns
+                    {title: "Nome", field: "nome"},
+                    {title: "Autocarros", field: "autocarros"},
+                    {title: "Estado da Paragem", field: "estado", formatter: "star", hozAlign: "center", width: 100},
+                    {title: "Última Atualização", field: "update"}
+                ],
+            });
+        include includes/footer

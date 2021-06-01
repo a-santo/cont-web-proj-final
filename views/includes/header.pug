@@ -1,0 +1,61 @@
+header#header
+    // Navbar
+    nav.navbar.navbar-expand-lg.bg-dark.navbar-dark
+        // Container wrapper
+        .container-fluid
+            // Navbar brand
+            a.navbar-brand(href='#') Bus4You
+            // Toggle button
+            button.navbar-toggler(type='button' data-mdb-toggle='collapse' data-mdb-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+                i.fas.fa-bars
+            // Collapsible wrapper
+            #navbarSupportedContent.collapse.navbar-collapse
+                ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                    li.nav-item.dropdown
+                        a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-mdb-toggle='dropdown' aria-expanded='false')
+                           b Pesquisar
+                        ul.dropdown-menu.dropdown-menu-dark(aria-labelledby='navbarDropdown')
+                            li
+                                a.dropdown-item(href='#') Rota - Destino
+                            li
+                                a.dropdown-item(href='#') Rota - Paragem
+                            li
+                                hr.dropdown-divider
+                            li
+                                a.dropdown-item(href='#') Autocarro
+                            i
+                                hr.dropdown-divider
+                            li
+                                a.dropdown-item(href='#') Paragem
+                    li.nav-item
+                        a.nav-link(href='#')
+                            b Estatísticas
+                    li.nav-item
+                        a.nav-link(href='#')
+                           b Sobre
+                .d-flex.align-items-center
+                    a#botaoAreaDeUtilizador.dropdown-toggle.d-flex.align-items-center.hidden-arrow(href='#' role='button' data-mdb-toggle='dropdown' aria-expanded='false' style='color:red')
+                        i.far.fa-user-circle.fa-2x
+                    ul.dropdown-menu.dropdown-menu-dark.dropdown-menu-end(aria-labelledby='navbarDropdownMenuLink')
+                        li
+                            b.dropdown-item-text Conta
+                        li
+                            a.dropdown-item(href='#') Preferências
+                        li
+                            a.dropdown-item(href='#') Favoritos
+                        li
+                            a.dropdown-item(href='#') Registo
+                        li
+                            hr.dropdown-divider
+                        li
+                            b.dropdown-item-text Outros
+                        li
+                            a.dropdown-item(href='#') Terminar Sessão
+
+script.
+    $(document).ready(function () {
+        if (document.cookie.indexOf('loggedIn=') !== -1) {
+            $('#botaoAreaDeUtilizador').css('color', 'green');
+        }
+    });
+
