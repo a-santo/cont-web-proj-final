@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta http-equiv="X-UA-Compatible" content="ie=edge"><!--link(rel="stylesheet" href="css/all.css")--><link rel="stylesheet" href="../css/all.min.css"><link rel="stylesheet" href="../css/googlefonts.css?family=Roboto:300,400,500,700&amp;display=swap"><link rel="stylesheet" href="../css/mdb.min.css"><link rel="stylesheet" href="../css/tabulator.min.css"><link rel="stylesheet" href="../css/select2.min.css"><link rel="stylesheet" href="../css/leaflet.css"><!--script(src="js/bootstrap.js")--><script src="../js/mdb.min.js"></script><script src="../js/jquery-3.6.0.min.js"></script><script src="../js/tabulator.min.js"></script><script src="../js/select2.min.js"></script><script src="../js/leaflet.js"></script><!--link(rel="stylesheet" href="css/bootstrap.css")--><title>Bus4You</title></head><body><header id="header"><!-- Navbar--><nav class="navbar navbar-expand-lg bg-dark navbar-dark"><!-- Container wrapper--><div class="container-fluid"><!-- Navbar brand--><a class="navbar-brand" href="/">Bus4You</a><!-- Toggle button--><button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button><!-- Collapsible wrapper--><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav me-auto mb-2 mb-lg-0"><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-mdb-toggle="dropdown" aria-expanded="false"><b>Pesquisar</b></a><ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="#">Rota - Destino</a></li><li><a class="dropdown-item" href="#">Rota - Paragem</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="#">Autocarro</a></li><i><hr class="dropdown-divider"></i><li><a class="dropdown-item" href="#">Paragem</a></li></ul></li><li class="nav-item"><a class="nav-link" href="#"><b>Estatísticas</b></a></li><li class="nav-item"><a class="nav-link" href="#"><b>Sobre</b></a></li></ul><div class="d-flex align-items-center"><a class="dropdown-toggle d-flex align-items-center hidden-arrow" id="botaoAreaDeUtilizador" href="#" role="button" data-mdb-toggle="dropdown" aria-expanded="false" style="color:red"><i class="far fa-user-circle fa-2x"></i></a><ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink"><li><b class="dropdown-item-text">Conta</b></li><li><a class="dropdown-item" href="#">Preferências</a></li><li><a class="dropdown-item" href="#">Favoritos</a></li><li><a class="dropdown-item" href="#">Registo</a></li><li><hr class="dropdown-divider"></li><li><b class="dropdown-item-text">Outros</b></li><li><a class="dropdown-item" href="#">Terminar Sessão</a></li></ul></div></div></div></nav></header><script>$(document).ready(function () {
+    if (document.cookie.indexOf('loggedIn=') !== -1) {
+        $('#botaoAreaDeUtilizador').css('color', 'green');
+    }
+});</script><h1 class="text-center">Autocarro número </h1><div id="mapa" style="height: 680px;"></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><!--a.text-reset.fw-bold(href='https://mdbootstrap.com/') MDBootstrap.com--><br><i class="fas fa-envelope fa-3x"></i></div></footer></body><script>$(document).ready(function () {
+    var mapa = L.map('mapa').setView([38.7052, -9.1586], 16);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: ''
+    }).addTo(mapa);
+    const fontAwesomeIcon = L.divIcon({
+        html: '<i class="fas fa-bus-alt fa-2x" style="color:red"></i>',
+        iconSize: [20, 20],
+        className: 'iconAutocarro'
+    });
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    L.marker([38.7064055674469, -9.145174859402829]).addTo(mapa);
+    const coordenadas = [
+        [38.7052, -9.1586],
+        [38.70548460194602, -9.157877800360074],
+        [38.706120906649616, -9.156633255468991],
+        [38.706522780386976, -9.155388710577911],
+        [38.70665673779749, -9.154294369380581],
+        [38.7065897591236, -9.153285858865395],
+        [38.706522780386976, -9.151633618234131],
+        [38.70657301444531, -9.150946972776984],
+        [38.70653952507702, -9.14959513953322],
+        [38.70653952507702, -9.147942898901958],
+        [38.7064558015876, -9.146912930716237],
+        [38.7064055674469, -9.145174859402829]
+    ]
+
+    async function demo() {
+        for (let coordenada of coordenadas) {
+            const marcador = L.marker(coordenada, {
+                icon: fontAwesomeIcon
+            }).addTo(mapa)
+                .bindPopup('Autocarro <b></b>')
+            await sleep(3000)
+            mapa.removeLayer(marcador)
+        }
+    }
+    demo()
+})</script></html>

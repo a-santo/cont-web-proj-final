@@ -31,13 +31,13 @@ html(lang="en")
                     var tabledata = [
                         {
                             nome: "Paragem B - Sul",
-                            autocarros: "612, 233, 56, 65, 2",
+                            autocarros: "612",
                             estado: 3,
                             update: "15 Mar, 8:56 (2021)"
                         },
                         {
                             nome: "Paragem B - Norte",
-                            autocarros: "612, 233, 56, 65, 2",
+                            autocarros: "612",
                             estado: 5,
                             update: "12 Feb, 7:12 (2021)"
                         }
@@ -58,7 +58,13 @@ html(lang="en")
                         ],
                         columns: [                 //define the table columns
                             {title: "Nome", field: "nome"},
-                            {title: "Autocarros", field: "autocarros"},
+                            {title: "Autocarros", field: "autocarros", formatter: "link",
+                                formatterParams: {
+                                    labelField: "autocarros",
+                                    urlPrefix: "/autocarro/",
+                                    urlField: "autocarros"
+                                }
+                            },
                             {
                                 title: "Estado da Paragem",
                                 field: "estado",
