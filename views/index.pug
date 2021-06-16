@@ -20,11 +20,11 @@ html(lang="en")
         include includes/footer
     script.
         $(document).ready(function () {
+            setTipoPesquisa('#{tipo}', '.tipo-pesquisa')
             $('.tipo-pesquisa').select2();
             // A select2 não mete a altura certa.. Para ver mais tarde
             $(".select2-container").css('height', '35px');
             $(".select2-selection").css('height', '35px');
-
             $("#pesquisar").click(function () {
                 let escolha = $('.tipo-pesquisa').find(":selected").val();
                 if (escolha === 'PARAGEM') {

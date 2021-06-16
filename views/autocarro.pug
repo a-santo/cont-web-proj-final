@@ -3,7 +3,7 @@ html(lang="en")
     include includes/head
     body
         include includes/header
-        h1.text-center Autocarro número #{id}
+        h3.text-center Autocarro número #{id}
         div#mapa(style="height: 680px;")
         include includes/footer
     script.
@@ -42,7 +42,15 @@ html(lang="en")
                 [38.7064055674469, -9.145174859402829]
             ]
 
-            async function demo() {
+            async function alerta() {
+                Swal.fire(
+                    'Informação sobre o autocarro',
+                    'O autocarro número <b>612</b> chegou à paragem: <b>Cais do Sodré</b>',
+                    'success'
+                )
+            }
+
+            async function autocarroTempoReal() {
                 for (let coordenada of coordenadas) {
                     const marcador = L.marker(coordenada, {
                         icon: fontAwesomeIcon
@@ -51,6 +59,7 @@ html(lang="en")
                     await sleep(3000)
                     mapa.removeLayer(marcador)
                 }
+                alerta()
             }
-            demo()
+            autocarroTempoReal()
         })

@@ -2,59 +2,41 @@
     if (document.cookie.indexOf('loggedIn=') !== -1) {
         $('#botaoAreaDeUtilizador').css('color', 'green');
     }
-});</script><h3 class="text-center">Autocarro número </h3><div id="mapa" style="height: 680px;"></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><!--a.text-reset.fw-bold(href='https://mdbootstrap.com/') MDBootstrap.com--><br><i class="fas fa-envelope fa-3x"></i></div></footer></body><script>$(document).ready(function () {
-    var mapa = L.map('mapa').setView([38.7052, -9.1586], 16);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: ''
-    }).addTo(mapa);
-    const fontAwesomeIcon = L.divIcon({
-        html: '<i class="fas fa-bus-alt fa-2x" style="color:red"></i>',
-        iconSize: [20, 20],
-        className: 'iconAutocarro'
-    });
-
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    L.marker([38.7064055674469, -9.145174859402829]).addTo(mapa);
-    const coordenadas = [
-        [38.7052, -9.1586],
-        [38.70548460194602, -9.157877800360074],
-        [38.706120906649616, -9.156633255468991],
-        [38.706522780386976, -9.155388710577911],
-        [38.70665673779749, -9.154294369380581],
-        [38.7065897591236, -9.153285858865395],
-        [38.706522780386976, -9.151633618234131],
-        [38.70657301444531, -9.150946972776984],
-        [38.70653952507702, -9.14959513953322],
-        [38.70653952507702, -9.147942898901958],
-        [38.7064558015876, -9.146912930716237],
-        [38.7064055674469, -9.145174859402829]
-    ]
-
-    async function alerta() {
-        Swal.fire(
-            'Informação sobre o autocarro',
-            'O autocarro número <b>612</b> chegou à paragem: <b>Cais do Sodré</b>',
-            'success'
-        )
-    }
-
-    async function autocarroTempoReal() {
-        for (let coordenada of coordenadas) {
-            const marcador = L.marker(coordenada, {
-                icon: fontAwesomeIcon
-            }).addTo(mapa)
-                .bindPopup('Autocarro <b></b>')
-            await sleep(3000)
-            mapa.removeLayer(marcador)
+});</script><br><h3 class="float-right"><b>Registo de pesquisa</b></h3><div id="container-tabela-registo" style="display: none;"><br><div class="float-end"><button class="btn btn-success" id="download-xlsx" style="margin: 0 0 1em 0;">Descarregar Excel</button></div><br><br><div id="tabela-registo"></div></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><!--a.text-reset.fw-bold(href='https://mdbootstrap.com/') MDBootstrap.com--><br><i class="fas fa-envelope fa-3x"></i></div></footer></body><script>$(document).ready(function () {
+    var tabledata = [
+        {
+            tipoPesquisa: "Autocarro",
+            query: "612",
+            data: "15 Mar, 8:56 (2021)"
+        },
+        {
+            tipoPesquisa: "Paragem",
+            query: "Cais do Sodré",
+            data: "15 Mar, 8:55 (2021)"
         }
-        alerta()
-    }
-    autocarroTempoReal()
+    ];
+    let table = new Tabulator("#tabela-registo", {
+        data: tabledata,           //load row data from array
+        layout: "fitColumns",      //fit columns to width of table
+        responsiveLayout: "hide",  //hide columns that dont fit on the table
+        tooltips: true,            //show tool tips on cells
+        addRowPos: "top",          //when adding a new row, add it to the top of the table
+        history: true,             //allow undo and redo actions on the table
+        pagination: "local",       //paginate the data
+        paginationSize: 7,         //allow 7 rows per page of data
+        movableColumns: true,      //allow column order to be changed
+        resizableRows: true,       //allow row order to be changed
+        initialSort: [             //set the initial sort order of the data
+            {column: "data", dir: "dsc"},
+        ],
+        columns: [                 //define the table columns
+            {title: "Tipo de Pesquisa", field: "tipoPesquisa"},
+            {title: "Pesquisa", field: "query"},
+            {title: "Data", field: "data"}
+        ],
+    });
+    $("#container-tabela-registo").show()
+    document.getElementById("download-xlsx").addEventListener("click", function () {
+        table.download("xlsx", "registo_de_pesquisas.xlsx", {sheetName: "Registo de Pesquisas"});
+    });
 })</script></html>

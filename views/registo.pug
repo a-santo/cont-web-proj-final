@@ -1,0 +1,55 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        br
+        h3.float-right
+            b Registo de pesquisa
+        div#container-tabela-registo(style='display: none;')
+            br
+            div.float-end
+                button#download-xlsx.btn.btn-success(style="margin: 0 0 1em 0;") Descarregar Excel
+            br
+            br
+            div#tabela-registo
+        include includes/footer
+    script.
+        $(document).ready(function () {
+            var tabledata = [
+                {
+                    tipoPesquisa: "Autocarro",
+                    query: "612",
+                    data: "15 Mar, 8:56 (2021)"
+                },
+                {
+                    tipoPesquisa: "Paragem",
+                    query: "Cais do Sodré",
+                    data: "15 Mar, 8:55 (2021)"
+                }
+            ];
+            let table = new Tabulator("#tabela-registo", {
+                data: tabledata,           //load row data from array
+                layout: "fitColumns",      //fit columns to width of table
+                responsiveLayout: "hide",  //hide columns that dont fit on the table
+                tooltips: true,            //show tool tips on cells
+                addRowPos: "top",          //when adding a new row, add it to the top of the table
+                history: true,             //allow undo and redo actions on the table
+                pagination: "local",       //paginate the data
+                paginationSize: 7,         //allow 7 rows per page of data
+                movableColumns: true,      //allow column order to be changed
+                resizableRows: true,       //allow row order to be changed
+                initialSort: [             //set the initial sort order of the data
+                    {column: "data", dir: "dsc"},
+                ],
+                columns: [                 //define the table columns
+                    {title: "Tipo de Pesquisa", field: "tipoPesquisa"},
+                    {title: "Pesquisa", field: "query"},
+                    {title: "Data", field: "data"}
+                ],
+            });
+            $("#container-tabela-registo").show()
+            document.getElementById("download-xlsx").addEventListener("click", function () {
+                table.download("xlsx", "registo_de_pesquisas.xlsx", {sheetName: "Registo de Pesquisas"});
+            });
+        })
