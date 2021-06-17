@@ -8,25 +8,18 @@ html(lang="en")
         include includes/footer
     script.
         $(document).ready(function () {
-            var mapa = L.map('mapa').setView([38.7052, -9.1586], 16);
-            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox/streets-v11',
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: '#{token}'
-            }).addTo(mapa);
-            const fontAwesomeIcon = L.divIcon({
-                html: '<i class="fas fa-bus-alt fa-2x" style="color:red"></i>',
-                iconSize: [20, 20],
-                className: 'iconAutocarro'
+            const id = #{id}
+            L.mapquest.key = '#{token}';
+            var mapa = L.mapquest.map('mapa', {
+                center: [38.7052, -9.1586],
+                layers: L.mapquest.tileLayer('map'),
+                zoom: 16
             });
 
             function sleep(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
-            L.marker([38.7064055674469, -9.145174859402829]).addTo(mapa);
+
             const coordenadas = [
                 [38.7052, -9.1586],
                 [38.70548460194602, -9.157877800360074],
@@ -42,6 +35,26 @@ html(lang="en")
                 [38.7064055674469, -9.145174859402829]
             ]
 
+            async function autocarroTempoReal() {
+                for (let coordenada of coordenadas) {
+                    const marcador = L.marker(coordenada, {
+                        icon: L.mapquest.icons.marker({
+                            primaryColor: '#22407F',
+                            secondaryColor: '#3B5998',
+                            shadow: true,
+                            size: 'md',
+                            symbol: id
+                        }),
+                        draggable: false
+                    }).bindPopup(id).addTo(mapa);
+                    await sleep(3000)
+                    mapa.removeLayer(marcador)
+                }
+                alerta()
+            }
+
+            autocarroTempoReal()
+
             async function alerta() {
                 Swal.fire(
                     'Informação sobre o autocarro',
@@ -49,17 +62,4 @@ html(lang="en")
                     'success'
                 )
             }
-
-            async function autocarroTempoReal() {
-                for (let coordenada of coordenadas) {
-                    const marcador = L.marker(coordenada, {
-                        icon: fontAwesomeIcon
-                    }).addTo(mapa)
-                        .bindPopup('Autocarro <b>#{id}</b>')
-                    await sleep(3000)
-                    mapa.removeLayer(marcador)
-                }
-                alerta()
-            }
-            autocarroTempoReal()
         })
