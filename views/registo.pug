@@ -13,6 +13,8 @@ html(lang="en")
             br
             br
             div#tabela-registo
+            div.float-left
+                button#limpar.btn.btn-danger(style="margin: 1em 0 1em 0;") Limpar Registo
         include includes/footer
     script.
         $(document).ready(function () {
@@ -51,5 +53,27 @@ html(lang="en")
             $("#container-tabela-registo").show()
             document.getElementById("download-xlsx").addEventListener("click", function () {
                 table.download("xlsx", "registo_de_pesquisas.xlsx", {sheetName: "Registo de Pesquisas"});
+            });
+
+            document.getElementById("limpar").addEventListener("click", function () {
+                Swal.fire({
+                    title: 'Tem a certeza?',
+                    text: "Não será possível recuperar o registo!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: "Cancelar",
+                    confirmButtonText: 'Sim, apagar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        table.clearData();
+                        Swal.fire(
+                            'Apagado!',
+                            'O registo foi apagado com sucesso.',
+                            'success'
+                        )
+                    }
+                })
             });
         })

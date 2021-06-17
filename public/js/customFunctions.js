@@ -9,3 +9,9 @@ async function setTipoPesquisa(tipo, locator) {
         $(`${locator}`).val("PARAGEM")
     }
 }
+
+function gerarTabela(opcoes, locTabela, locDivTabela) {
+    const tabela = new Tabulator(locTabela, opcoes);
+    $(locDivTabela).show()
+    return tabela
+}

@@ -2,59 +2,34 @@
     if (document.cookie.indexOf('loggedIn=') !== -1) {
         $('#botaoAreaDeUtilizador').css('color', 'green');
     }
-});</script><h3 class="text-center">Autocarro número </h3><div id="mapa" style="height: 680px;"></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><!--a.text-reset.fw-bold(href='https://mdbootstrap.com/') MDBootstrap.com--><br><i class="fas fa-envelope fa-3x"></i></div></footer></body><script>$(document).ready(function () {
-    var mapa = L.map('mapa').setView([38.7052, -9.1586], 16);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: ''
-    }).addTo(mapa);
-    const fontAwesomeIcon = L.divIcon({
-        html: '<i class="fas fa-bus-alt fa-2x" style="color:red"></i>',
-        iconSize: [20, 20],
-        className: 'iconAutocarro'
+});</script><h3 class="text-center">Rota número </h3><div id="mapa" style="height: 680px;"></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><!--a.text-reset.fw-bold(href='https://mdbootstrap.com/') MDBootstrap.com--><br><i class="fas fa-envelope fa-3x"></i></div></footer></body><script>$(document).ready(function () {
+    const id = 
+    console.warn(id)
+    L.mapquest.key = '';
+    let coordenadas,
+        inicio,
+        fim
+    if(id===1) {
+        coordenadas = [38.7052, -9.1586]
+        inicio = 'Praça da Figueira'
+        fim = 'Cais do Sodré'
+    } else {
+        coordenadas = [38.7052, -9.1586]
+        inicio = 'Aeroporto da Portela'
+        fim = 'Praça Dom Pedro IV'
+    }
+    var map = L.mapquest.map('mapa', {
+        center: coordenadas,
+        layers: L.mapquest.tileLayer('map'),
+        zoom: 16
     });
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    L.marker([38.7064055674469, -9.145174859402829]).addTo(mapa);
-    const coordenadas = [
-        [38.7052, -9.1586],
-        [38.70548460194602, -9.157877800360074],
-        [38.706120906649616, -9.156633255468991],
-        [38.706522780386976, -9.155388710577911],
-        [38.70665673779749, -9.154294369380581],
-        [38.7065897591236, -9.153285858865395],
-        [38.706522780386976, -9.151633618234131],
-        [38.70657301444531, -9.150946972776984],
-        [38.70653952507702, -9.14959513953322],
-        [38.70653952507702, -9.147942898901958],
-        [38.7064558015876, -9.146912930716237],
-        [38.7064055674469, -9.145174859402829]
-    ]
-
-    async function alerta() {
-        Swal.fire(
-            'Informação sobre o autocarro',
-            'O autocarro número <b>612</b> chegou à paragem: <b>Cais do Sodré</b>',
-            'success'
-        )
-    }
-
-    async function autocarroTempoReal() {
-        for (let coordenada of coordenadas) {
-            const marcador = L.marker(coordenada, {
-                icon: fontAwesomeIcon
-            }).addTo(mapa)
-                .bindPopup('Autocarro <b></b>')
-            await sleep(3000)
-            mapa.removeLayer(marcador)
+    L.mapquest.directions().route({
+        start: { street: inicio, city: 'Lisboa', country: 'Portugal'},
+        end: { street: fim, city: 'Lisboa', country: 'Portugal'},
+        options: {
+            routeType: 'shortest'
         }
-        alerta()
-    }
-    autocarroTempoReal()
+    });
+
 })</script></html>

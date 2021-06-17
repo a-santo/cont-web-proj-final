@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta http-equiv="X-UA-Compatible" content="ie=edge"><!--link(rel="stylesheet" href="css/all.css")--><link rel="stylesheet" href="../css/all.min.css"><link rel="stylesheet" href="../css/googlefonts.css?family=Roboto:300,400,500,700&amp;display=swap"><link rel="stylesheet" href="../css/mdb.min.css"><link rel="stylesheet" href="../css/tabulator.min.css"><link rel="stylesheet" href="../css/select2.min.css"><link rel="stylesheet" href="../css/leaflet.css"><link rel="stylesheet" href="../css/mapquest.css"><script src="../js/mdb.min.js"></script><script src="../js/jquery-3.6.0.min.js"></script><script src="../js/tabulator.min.js"></script><script src="../js/select2.min.js"></script><script src="../js/leaflet.js"></script><script src="../js/sweetalert2.all.min.js"></script><script src="../js/customFunctions.js"></script><script src="../js/xlsx.full.min.js"></script><script src="../js/mapquest.js"></script><title>Bus4You</title></head><body><header id="header"><!-- Navbar--><nav class="navbar navbar-expand-lg bg-dark navbar-dark"><!-- Container wrapper--><div class="container-fluid"><!-- Navbar brand--><a class="navbar-brand" href="/">Bus4You</a><!-- Toggle button--><button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button><!-- Collapsible wrapper--><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav me-auto mb-2 mb-lg-0"><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-mdb-toggle="dropdown" aria-expanded="false"><b>Pesquisar</b></a><ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="/pesquisa/rota-dest">Rota - Destino</a></li><li><a class="dropdown-item" href="/pesquisa/rota-para">Rota - Paragem</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="/pesquisa/autocarro">Autocarro</a></li><i><hr class="dropdown-divider"></i><li><a class="dropdown-item" href="/pesquisa/paragem">Paragem</a></li></ul></li><li class="nav-item"><a class="nav-link" href="#"><b>Estatísticas</b></a></li><li class="nav-item"><a class="nav-link" href="#"><b>Sobre</b></a></li></ul><div class="d-flex align-items-center"><a class="dropdown-toggle d-flex align-items-center hidden-arrow" id="botaoAreaDeUtilizador" href="#" role="button" data-mdb-toggle="dropdown" aria-expanded="false" style="color:red"><i class="far fa-user-circle fa-2x"></i></a><ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink"><li><b class="dropdown-item-text">Conta</b></li><li><a class="dropdown-item" href="#">Preferências</a></li><li><a class="dropdown-item" href="/favoritos">Favoritos</a></li><li><a class="dropdown-item" href="/registo">Registo</a></li><li><hr class="dropdown-divider"></li><li><b class="dropdown-item-text">Outros</b></li><li><a class="dropdown-item" href="#">Terminar Sessão</a></li></ul></div></div></div></nav></header><script>$(document).ready(function () {
+    if (document.cookie.indexOf('loggedIn=') !== -1) {
+        $('#botaoAreaDeUtilizador').css('color', 'green');
+    }
+});</script><br><br><div class="d-flex justify-content-between"><h3 class="float-left"><b>Favoritos</b></h3><div class="float-end"><select class="tipo-pesquisa" name="tipo" style="width: 300px"><option value="rota-dest">Rota - Destino</option><option value="rota-para">Rota - Paragem</option><option value="autocarros">Autocarros</option><option value="paragens" selected="selected">Paragens</option></select></div></div><div id="container-tabela-favoritos" style="display: none;"><div id="tabela-favoritos"></div></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><!--a.text-reset.fw-bold(href='https://mdbootstrap.com/') MDBootstrap.com--><br><i class="fas fa-envelope fa-3x"></i></div></footer></body><script>$('.tipo-pesquisa').select2();
+$(document).ready(function () {
+    mostrarParagens()
+    $(function () {
+        $(".tipo-pesquisa").change(function () {
+            const opcao = $('option:selected', this).val()
+            if(opcao === "autocarros") mostrarAutocarros()
+            else if (opcao === "rota-dest") mostrarRotaDest()
+            else if (opcao === "rota-para") mostrarRotaPara()
+            else mostrarParagens()
+        });
+    });
+
+    function mostrarAutocarros() {
+        const dadosTabela = [
+            {
+                numero: "612",
+                trajecto: "Rua Esquerda <i class=\"fas fa-sync\"></i> Rua Direita",
+                horarios: "6:30 - 22:30",
+                data: "14 Mai 8:56 (2021)",
+                apagar: "<i class=\"far fa-trash-alt\"></i>"
+            },
+            {
+                numero: "68",
+                trajecto: "Rua De Cima <i class=\"fas fa-sync\"></i> Rua De Baixo",
+                horarios: "5:15 - 23:30",
+                data: "13 Mai 17:12 (2021)",
+                apagar: "<i class=\"far fa-trash-alt\"></i>"
+            }
+        ];
+        const opcoesTabela = {
+            data: dadosTabela,           //load row data from array
+            layout: "fitColumns",      //fit columns to width of table
+            responsiveLayout: "hide",  //hide columns that dont fit on the table
+            tooltips: true,            //show tool tips on cells
+            addRowPos: "top",          //when adding a new row, add it to the top of the table
+            history: true,             //allow undo and redo actions on the table
+            pagination: "local",       //paginate the data
+            paginationSize: 7,         //allow 7 rows per page of data
+            movableColumns: true,      //allow column order to be changed
+            resizableRows: true,       //allow row order to be changed
+            initialSort: [             //set the initial sort order of the data
+                {column: "data", dir: "dsc"},
+            ],
+            columns: [                 //define the table columns
+                {title: "", field: "apagar",
+                    formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                        cell.getRow().delete();
+                    }},
+                {title: "Numero", field: "numero", formatter: "link",
+                    formatterParams: {
+                        labelField: "numero",
+                        urlPrefix: "/autocarro/"
+                    }
+                },
+                {title: "Trajecto", field: "trajecto", formatter: "html"},
+                {title: "Primeiro e Último Autocarro", field: "horarios"},
+                {title: "Adicionado em", field: "data"}
+            ],
+        }
+        gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+    }
+
+    function mostrarParagens() {
+        const dadosTabela = [
+            {
+                nome: "Cais do Sodré",
+                autocarros: "612",
+                data: "15 Mar, 8:56 (2021)",
+                apagar: "<i class=\"far fa-trash-alt\"></i>"
+            },
+            {
+                nome: "Oriente",
+                autocarros: "7",
+                data: "13 Mai, 8:56 (2021)",
+                apagar: "<i class=\"far fa-trash-alt\"></i>"
+            }
+        ];
+        const opcoesTabela = {
+            data: dadosTabela,         //load row data from array
+            layout: "fitColumns",      //fit columns to width of table
+            responsiveLayout: "hide",  //hide columns that dont fit on the table
+            tooltips: true,            //show tool tips on cells
+            addRowPos: "top",          //when adding a new row, add it to the top of the table
+            history: true,             //allow undo and redo actions on the table
+            pagination: "local",       //paginate the data
+            paginationSize: 7,         //allow 7 rows per page of data
+            movableColumns: true,      //allow column order to be changed
+            resizableRows: true,       //allow row order to be changed
+            initialSort: [             //set the initial sort order of the data
+                {column: "data", dir: "dsc"},
+            ],
+            columns: [
+                {
+                    title: "", field: "apagar",
+                    formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                        cell.getRow().delete();
+                    }
+                },
+                {title: "Nome", field: "nome"},
+                {title: "Autocarros", field: "autocarros", formatter: "link",
+                    formatterParams: {
+                        labelField: "autocarros",
+                        urlPrefix: "/autocarro/"
+                    }},
+                {title: "Adicionado em", field: "data"}
+            ],
+        }
+        gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+    }
+
+    function mostrarRotaDest() {
+        const dadosTabela = [
+            {
+                inicio: "Praça da Figueira",
+                fim: "Cais do Sodré",
+                data: "15 Mar, 8:56 (2021)",
+                apagar: "<i class=\"far fa-trash-alt\"></i>",
+                idRota: 1,
+                autocarros: "612"
+            },
+        ];
+        const opcoesTabela = {
+            data: dadosTabela,         //load row data from array
+            layout: "fitColumns",      //fit columns to width of table
+            responsiveLayout: "hide",  //hide columns that dont fit on the table
+            tooltips: true,            //show tool tips on cells
+            addRowPos: "top",          //when adding a new row, add it to the top of the table
+            history: true,             //allow undo and redo actions on the table
+            pagination: "local",       //paginate the data
+            paginationSize: 7,         //allow 7 rows per page of data
+            movableColumns: true,      //allow column order to be changed
+            resizableRows: true,       //allow row order to be changed
+            initialSort: [             //set the initial sort order of the data
+                {column: "data", dir: "dsc"},
+            ],
+            columns: [
+                {
+                    title: "", field: "apagar",
+                    formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                        cell.getRow().delete();
+                    }
+                },
+                {title: "Início", field: "inicio"},
+                {title: "Fim", field: "fim"},
+                {
+                    title: "", field: "idRota", formatter: "link",
+                    formatterParams: {
+                        labelField: "idRota",
+                        urlPrefix: "/rota/",
+                        label: "Ver"
+                    }
+                },
+                {title: "Autocarros", field: "autocarros"},
+                {title: "Adicionado em", field: "data"}
+            ],
+        }
+        gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+    }
+
+    function mostrarRotaPara() {
+        const dadosTabela = [
+            {
+                inicio: "Aeroporto",
+                fim: "Praça Dom Pedro IV",
+                data: "13 Mar, 8:56 (2021)",
+                apagar: "<i class=\"far fa-trash-alt\"></i>",
+                idRota: 2,
+                autocarros: "612"
+            },
+        ];
+        const opcoesTabela = {
+            data: dadosTabela,         //load row data from array
+            layout: "fitColumns",      //fit columns to width of table
+            responsiveLayout: "hide",  //hide columns that dont fit on the table
+            tooltips: true,            //show tool tips on cells
+            addRowPos: "top",          //when adding a new row, add it to the top of the table
+            history: true,             //allow undo and redo actions on the table
+            pagination: "local",       //paginate the data
+            paginationSize: 7,         //allow 7 rows per page of data
+            movableColumns: true,      //allow column order to be changed
+            resizableRows: true,       //allow row order to be changed
+            initialSort: [             //set the initial sort order of the data
+                {column: "data", dir: "dsc"},
+            ],
+            columns: [
+                {
+                    title: "", field: "apagar",
+                    formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                        cell.getRow().delete();
+                    }
+                },
+                {title: "Paragem - Início", field: "inicio"},
+                {title: "Paragem - Fim", field: "fim"},
+                {
+                    title: "", field: "idRota", formatter: "link",
+                    formatterParams: {
+                        labelField: "idRota",
+                        urlPrefix: "/rota/",
+                        label: "Ver"
+                    }
+                },
+                {title: "Autocarros", field: "autocarros"},
+                {title: "Adicionado em", field: "data"}
+            ],
+        }
+        gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+    }
+})</script></html>

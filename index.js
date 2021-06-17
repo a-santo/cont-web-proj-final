@@ -22,4 +22,12 @@ app.get('/registo', function(req, res){
     res.render('registo');
 });
 
+app.get('/favoritos', function(req, res){
+    res.render('favoritos');
+});
+
+app.get('/rota/:id', function(req, res){
+    res.render('rota', { id: req.params.id, token: process.env.MAPQUEST_TOKEN });
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}`))

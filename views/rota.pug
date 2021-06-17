@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        h3.text-center Rota número #{id}
+        div#mapa(style="height: 680px;")
+        include includes/footer
+    script.
+        $(document).ready(function () {
+            const id = #{id}
+            console.warn(id)
+            L.mapquest.key = '#{token}';
+            let coordenadas,
+                inicio,
+                fim
+            if(id===1) {
+                coordenadas = [38.7052, -9.1586]
+                inicio = 'Praça da Figueira'
+                fim = 'Cais do Sodré'
+            } else {
+                coordenadas = [38.7052, -9.1586]
+                inicio = 'Aeroporto da Portela'
+                fim = 'Praça Dom Pedro IV'
+            }
+            var map = L.mapquest.map('mapa', {
+                center: coordenadas,
+                layers: L.mapquest.tileLayer('map'),
+                zoom: 16
+            });
+
+            L.mapquest.directions().route({
+                start: { street: inicio, city: 'Lisboa', country: 'Portugal'},
+                end: { street: fim, city: 'Lisboa', country: 'Portugal'},
+                options: {
+                    routeType: 'shortest'
+                }
+            });
+
+        })

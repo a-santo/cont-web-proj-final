@@ -1,0 +1,229 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        br
+        br
+        div.d-flex.justify-content-between
+            h3.float-left
+                b Favoritos
+            div.float-end
+                select.tipo-pesquisa(name='tipo', style="width: 300px")
+                    option(value='rota-dest') Rota - Destino
+                    option(value='rota-para') Rota - Paragem
+                    option(value='autocarros') Autocarros
+                    option(value='paragens', selected="selected") Paragens
+        div#container-tabela-favoritos(style='display: none;')
+            div#tabela-favoritos
+        include includes/footer
+    script.
+        $('.tipo-pesquisa').select2();
+        $(document).ready(function () {
+            mostrarParagens()
+            $(function () {
+                $(".tipo-pesquisa").change(function () {
+                    const opcao = $('option:selected', this).val()
+                    if(opcao === "autocarros") mostrarAutocarros()
+                    else if (opcao === "rota-dest") mostrarRotaDest()
+                    else if (opcao === "rota-para") mostrarRotaPara()
+                    else mostrarParagens()
+                });
+            });
+
+            function mostrarAutocarros() {
+                const dadosTabela = [
+                    {
+                        numero: "612",
+                        trajecto: "Rua Esquerda <i class=\"fas fa-sync\"></i> Rua Direita",
+                        horarios: "6:30 - 22:30",
+                        data: "14 Mai 8:56 (2021)",
+                        apagar: "<i class=\"far fa-trash-alt\"></i>"
+                    },
+                    {
+                        numero: "68",
+                        trajecto: "Rua De Cima <i class=\"fas fa-sync\"></i> Rua De Baixo",
+                        horarios: "5:15 - 23:30",
+                        data: "13 Mai 17:12 (2021)",
+                        apagar: "<i class=\"far fa-trash-alt\"></i>"
+                    }
+                ];
+                const opcoesTabela = {
+                    data: dadosTabela,           //load row data from array
+                    layout: "fitColumns",      //fit columns to width of table
+                    responsiveLayout: "hide",  //hide columns that dont fit on the table
+                    tooltips: true,            //show tool tips on cells
+                    addRowPos: "top",          //when adding a new row, add it to the top of the table
+                    history: true,             //allow undo and redo actions on the table
+                    pagination: "local",       //paginate the data
+                    paginationSize: 7,         //allow 7 rows per page of data
+                    movableColumns: true,      //allow column order to be changed
+                    resizableRows: true,       //allow row order to be changed
+                    initialSort: [             //set the initial sort order of the data
+                        {column: "data", dir: "dsc"},
+                    ],
+                    columns: [                 //define the table columns
+                        {title: "", field: "apagar",
+                            formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                                cell.getRow().delete();
+                            }},
+                        {title: "Numero", field: "numero", formatter: "link",
+                            formatterParams: {
+                                labelField: "numero",
+                                urlPrefix: "/autocarro/"
+                            }
+                        },
+                        {title: "Trajecto", field: "trajecto", formatter: "html"},
+                        {title: "Primeiro e Último Autocarro", field: "horarios"},
+                        {title: "Adicionado em", field: "data"}
+                    ],
+                }
+                gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+            }
+
+            function mostrarParagens() {
+                const dadosTabela = [
+                    {
+                        nome: "Cais do Sodré",
+                        autocarros: "612",
+                        data: "15 Mar, 8:56 (2021)",
+                        apagar: "<i class=\"far fa-trash-alt\"></i>"
+                    },
+                    {
+                        nome: "Oriente",
+                        autocarros: "7",
+                        data: "13 Mai, 8:56 (2021)",
+                        apagar: "<i class=\"far fa-trash-alt\"></i>"
+                    }
+                ];
+                const opcoesTabela = {
+                    data: dadosTabela,         //load row data from array
+                    layout: "fitColumns",      //fit columns to width of table
+                    responsiveLayout: "hide",  //hide columns that dont fit on the table
+                    tooltips: true,            //show tool tips on cells
+                    addRowPos: "top",          //when adding a new row, add it to the top of the table
+                    history: true,             //allow undo and redo actions on the table
+                    pagination: "local",       //paginate the data
+                    paginationSize: 7,         //allow 7 rows per page of data
+                    movableColumns: true,      //allow column order to be changed
+                    resizableRows: true,       //allow row order to be changed
+                    initialSort: [             //set the initial sort order of the data
+                        {column: "data", dir: "dsc"},
+                    ],
+                    columns: [
+                        {
+                            title: "", field: "apagar",
+                            formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                                cell.getRow().delete();
+                            }
+                        },
+                        {title: "Nome", field: "nome"},
+                        {title: "Autocarros", field: "autocarros", formatter: "link",
+                            formatterParams: {
+                                labelField: "autocarros",
+                                urlPrefix: "/autocarro/"
+                            }},
+                        {title: "Adicionado em", field: "data"}
+                    ],
+                }
+                gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+            }
+
+            function mostrarRotaDest() {
+                const dadosTabela = [
+                    {
+                        inicio: "Praça da Figueira",
+                        fim: "Cais do Sodré",
+                        data: "15 Mar, 8:56 (2021)",
+                        apagar: "<i class=\"far fa-trash-alt\"></i>",
+                        idRota: 1,
+                        autocarros: "612"
+                    },
+                ];
+                const opcoesTabela = {
+                    data: dadosTabela,         //load row data from array
+                    layout: "fitColumns",      //fit columns to width of table
+                    responsiveLayout: "hide",  //hide columns that dont fit on the table
+                    tooltips: true,            //show tool tips on cells
+                    addRowPos: "top",          //when adding a new row, add it to the top of the table
+                    history: true,             //allow undo and redo actions on the table
+                    pagination: "local",       //paginate the data
+                    paginationSize: 7,         //allow 7 rows per page of data
+                    movableColumns: true,      //allow column order to be changed
+                    resizableRows: true,       //allow row order to be changed
+                    initialSort: [             //set the initial sort order of the data
+                        {column: "data", dir: "dsc"},
+                    ],
+                    columns: [
+                        {
+                            title: "", field: "apagar",
+                            formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                                cell.getRow().delete();
+                            }
+                        },
+                        {title: "Início", field: "inicio"},
+                        {title: "Fim", field: "fim"},
+                        {
+                            title: "", field: "idRota", formatter: "link",
+                            formatterParams: {
+                                labelField: "idRota",
+                                urlPrefix: "/rota/",
+                                label: "Ver"
+                            }
+                        },
+                        {title: "Autocarros", field: "autocarros"},
+                        {title: "Adicionado em", field: "data"}
+                    ],
+                }
+                gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+            }
+
+            function mostrarRotaPara() {
+                const dadosTabela = [
+                    {
+                        inicio: "Aeroporto",
+                        fim: "Praça Dom Pedro IV",
+                        data: "13 Mar, 8:56 (2021)",
+                        apagar: "<i class=\"far fa-trash-alt\"></i>",
+                        idRota: 2,
+                        autocarros: "612"
+                    },
+                ];
+                const opcoesTabela = {
+                    data: dadosTabela,         //load row data from array
+                    layout: "fitColumns",      //fit columns to width of table
+                    responsiveLayout: "hide",  //hide columns that dont fit on the table
+                    tooltips: true,            //show tool tips on cells
+                    addRowPos: "top",          //when adding a new row, add it to the top of the table
+                    history: true,             //allow undo and redo actions on the table
+                    pagination: "local",       //paginate the data
+                    paginationSize: 7,         //allow 7 rows per page of data
+                    movableColumns: true,      //allow column order to be changed
+                    resizableRows: true,       //allow row order to be changed
+                    initialSort: [             //set the initial sort order of the data
+                        {column: "data", dir: "dsc"},
+                    ],
+                    columns: [
+                        {
+                            title: "", field: "apagar",
+                            formatter: "html", width: 40, align: "center", cellClick: function (e, cell) {
+                                cell.getRow().delete();
+                            }
+                        },
+                        {title: "Paragem - Início", field: "inicio"},
+                        {title: "Paragem - Fim", field: "fim"},
+                        {
+                            title: "", field: "idRota", formatter: "link",
+                            formatterParams: {
+                                labelField: "idRota",
+                                urlPrefix: "/rota/",
+                                label: "Ver"
+                            }
+                        },
+                        {title: "Autocarros", field: "autocarros"},
+                        {title: "Adicionado em", field: "data"}
+                    ],
+                }
+                gerarTabela(opcoesTabela, "#tabela-favoritos", "#container-tabela-favoritos")
+            }
+        })
