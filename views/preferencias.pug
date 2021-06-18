@@ -1,0 +1,88 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        .mt-3.mb-3.container
+            form.border.border-light.p-5
+              p.h4.mb-4.text-center Preferências
+              label(for='email') Endere&ccedil;o de e-mail
+              input#email.form-control.mb-4(type='email' placeholder='André Valério')
+              label(for='password-um') Nova palavra-passe
+              input#password-um.form-control.mb-4(type='password' placeholder='**********')
+              label(for='password-dois') Digite novamente a nova palavra-passe
+              input#password-dois.form-control.mb-4(type='password' placeholder='**********')
+              .container
+                  .row
+                    .col-md-6
+                      label(for='tipo-pesquisa') Tipo de pesquisa preferida
+                      br
+                      select#tipo-pesquisa.custom-dropdown(style="width: 100%;")
+                        option(value='1') Rota - Destino
+                        option(value='2') Rota - Paragem
+                        option(value='3') Autocarro
+                        option(value='4') Paragem
+                      br
+                      small#helper.form-text.text-muted.mb-4 Registo de pesquisas a manter
+                      .custom-control.custom-checkbox.mb-1
+                        input#rota-dest-chk.custom-control-input(type='checkbox')
+                        label.custom-control-label(for='rota-dest-chk') &nbsp;Rota - Destino
+                      .custom-control.custom-checkbox.mb-1
+                        input#rota-para-chk.custom-control-input(type='checkbox')
+                        label.custom-control-label(for='rota-para-chk') &nbsp;Rota - Paragem
+                      .custom-control.custom-checkbox.mb-1
+                        input#autocarro-chk.custom-control-input(type='checkbox')
+                        label.custom-control-label(for='autocarro-chk') &nbsp;Autocarro
+                      .custom-control.custom-checkbox.mb-1
+                        input#paragens-chk.custom-control-input(type='checkbox')
+                        label.custom-control-label(for='paragens-chk') &nbsp;Paragens
+                    .col-md-6
+                      label(for='num-regs') N&uacute;mero de Registos a manter
+                      select#num-regs.custom-dropdown(style="width: 100%;")
+                        option(value='1') 500
+                        option(value='2') 1000
+                        option(value='3') 1500
+                      small#helper.form-text.text-muted.mb-4 Estat&iacute;sticas preferidas a apresentar
+                      .custom-control.custom-radio.mb-1
+                        input#radio.custom-control-input(type='radio' name='custom-control-input')
+                        label.custom-control-label(for='radio') &nbsp;Total
+                      .custom-control.custom-radio.mb-1
+                        input#radio.custom-control-input(type='radio' name='custom-control-input')
+                        label.custom-control-label(for='radio') &nbsp;Total Di&aacute;rio
+                      .custom-control.custom-radio.mb-1
+                        input#radio.custom-control-input(type='radio' name='custom-control-input')
+                        label.custom-control-label(for='radio') &nbsp;&Uacute;ltimos 7 dias
+                      button#apagar.btn.btn-danger.btn-small APAGAR CONTA
+              br
+              button#guardar.btn.btn-success.btn-block(type='submit') Guardar Alterações
+
+        include includes/footer
+    script.
+        $(document).ready(function () {
+            
+            $('.custom-dropdown').select2();
+            
+            document.querySelector('form').addEventListener('submit', event => {
+              event.preventDefault();
+            });
+
+            document.getElementById("apagar").addEventListener("click", function () {
+                gerarConfirmacao(
+                    'Tem a certeza que deseja apagar a sua conta?',
+                    '<h2><span style="color: red"><b>ESTA ACÇÃO É IRREVERSÍVEL!</b></span></h2><br>Não será possível recuperar a sua conta!',
+                    'danger',
+                    'Conta apagada!',
+                    'A sua conta foi apagada com sucesso. Até sempre!',
+                    'success',
+                    null
+                )
+            });
+            document.getElementById("guardar").addEventListener("click", function () {
+                Swal.fire(
+                    "Sucesso!",
+                    "Preferências guardadas com sucesso.",
+                    "success"
+                )
+            });
+            
+        });

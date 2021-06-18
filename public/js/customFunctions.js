@@ -15,3 +15,25 @@ function gerarTabela(opcoes, locTabela, locDivTabela) {
     $(locDivTabela).show()
     return tabela
 }
+
+function gerarConfirmacao(titulo, texto, icone, titConf, txtConf, icoConf, cell) {
+    Swal.fire({
+        title: titulo,
+        html: texto,
+        icon: icone,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: "Cancelar",
+        confirmButtonText: 'Sim, apagar!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if(cell) cell.getRow().delete();
+            Swal.fire(
+                titConf,
+                txtConf,
+                icoConf
+            )
+        }
+    })
+}

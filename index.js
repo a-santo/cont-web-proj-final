@@ -30,4 +30,17 @@ app.get('/rota/:id', function(req, res){
     res.render('rota', { id: req.params.id, token: process.env.MAPQUEST_TOKEN });
 });
 
+app.get('/preferencias', function(req, res){
+    res.render('preferencias');
+});
+
+app.get('/login', function(req, res){
+    res.render('login');
+});
+
+app.get('/contacto', function(req, res){
+    res.render('contacto');
+});
+
+
 app.listen(port, () => console.log(`App listening on port ${port}`))
