@@ -1,7 +1,7 @@
 require('dotenv').config()
 let express = require('express');
 let app = express();
-let port = 3000;
+let port = 8081;
 
 app.set('view engine', 'pug');
 app.use(express.static("public"));
