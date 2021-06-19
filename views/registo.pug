@@ -3,18 +3,18 @@ html(lang="en")
     include includes/head
     body
         include includes/header
-        br
-        h3.float-right
-            b Registo de pesquisa
-        div#container-tabela-registo(style='display: none;')
-            br
-            div.float-end
-                button#download-xlsx.btn.btn-success(style="margin: 0 0 1em 0;") Descarregar Excel
-            br
-            br
-            div#tabela-registo
-            div.float-left
-                button#limpar.btn.btn-danger(style="margin: 1em 0 1em 0;") Limpar Registo
+        .mt-3.mb-3.container
+            h4.float-right
+                b Registo de pesquisa
+            div#container-tabela-registo(style='display: none;')
+                br
+                div.float-end
+                    button#download-xlsx.btn.btn-success(style="margin: 0 0 1em 0;") Descarregar Excel
+                br
+                br
+                div#tabela-registo
+                div.float-left
+                    button#limpar.btn.btn-danger(style="margin: 1em 0 1em 0;") Limpar Registo
         include includes/footer
     script.
         $(document).ready(function () {

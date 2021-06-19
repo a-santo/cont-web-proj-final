@@ -36,7 +36,7 @@ $(document).ready(function () {
             }
         })
     });
-});</script><br><br><div class="d-flex justify-content-between"><h3 class="float-left"><b>Favoritos</b></h3><div class="float-end"><select class="tipo-pesquisa" name="tipo" style="width: 300px"><option value="rota-dest">Rota - Destino</option><option value="rota-para">Rota - Paragem</option><option value="autocarros">Autocarros</option><option value="paragens" selected="selected">Paragens</option></select></div></div><div id="container-tabela-favoritos" style="display: none;"><div id="tabela-favoritos"></div></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><br><a href="/contacto"><i class="fas fa-envelope fa-3x"></i></a></div></footer></body><script>$('.tipo-pesquisa').select2();
+});</script><div class="mt-3 mb-3 container"><h3 class="float-left"><b>Favoritos</b></h3><div><select class="tipo-pesquisa" name="tipo" style="width: 100%;"><option value="rota-dest">Rota - Destino</option><option value="rota-para">Rota - Paragem</option><option value="autocarros">Autocarros</option><option value="paragens">Paragens</option></select></div><div id="container-tabela-favoritos" style="padding: 10px 0 0 0;height: 100%"><div id="tabela-favoritos" style="height: 100%"></div></div></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><br><a href="/contacto"><i class="fas fa-envelope fa-3x"></i></a></div></footer></body><script>$('.tipo-pesquisa').select2();
 $(document).ready(function () {
     mostrarParagens()
     $(function () {
@@ -111,12 +111,14 @@ $(document).ready(function () {
         const dadosTabela = [
             {
                 nome: "Cais do Sodré",
+                id: 1,
                 autocarros: "612",
                 data: "15 Mar, 8:56 (2021)",
                 apagar: "<i class=\"far fa-trash-alt\"></i>"
             },
             {
                 nome: "Oriente",
+                id: 2,
                 autocarros: "7",
                 data: "13 Mai, 8:56 (2021)",
                 apagar: "<i class=\"far fa-trash-alt\"></i>"
@@ -151,7 +153,13 @@ $(document).ready(function () {
                         )
                     }
                 },
-                {title: "Nome", field: "nome"},
+                {title: "Nome", field: "nome", formatter: "link",
+                    formatterParams: {
+                        labelField: "nome",
+                        urlPrefix: "/paragem/",
+                        urlField: "id"
+                    }
+                },
                 {title: "Autocarros", field: "autocarros", formatter: "link",
                     formatterParams: {
                         labelField: "autocarros",

@@ -10,7 +10,7 @@ html(lang="en")
         $(document).ready(function () {
             const id = #{id}
             L.mapquest.key = '#{token}';
-            var mapa = L.mapquest.map('mapa', {
+            let mapa = L.mapquest.map('mapa', {
                 center: [38.7052, -9.1586],
                 layers: L.mapquest.tileLayer('map'),
                 zoom: 16

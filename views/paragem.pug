@@ -1,0 +1,37 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        h3.text-center Ver Paragem
+        div#mapa(style="height: 680px;")
+        include includes/footer
+    script.
+        $(document).ready(function () {
+            const id = #{id}
+            L.mapquest.key = '#{token}';
+            let coordenada
+            if(id === 1) {
+                coordenada = [38.706334577315296, -9.145229599353884]
+            } else {
+                coordenada = [38.768469663904916, -9.098808460054062]
+            }
+
+            let mapa = L.mapquest.map('mapa', {
+                center: coordenada,
+                layers: L.mapquest.tileLayer('map'),
+                zoom: 16
+            });
+
+            L.marker(coordenada, {
+                icon: L.mapquest.icons.marker({
+                    primaryColor: '#22407F',
+                    secondaryColor: '#3B5998',
+                    shadow: true,
+                    size: 'md',
+                    symbol: id
+                }),
+                draggable: false
+            }).bindPopup(id).addTo(mapa);
+
+        })

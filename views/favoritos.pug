@@ -3,19 +3,17 @@ html(lang="en")
     include includes/head
     body
         include includes/header
-        br
-        br
-        div.d-flex.justify-content-between
+        .mt-3.mb-3.container
             h3.float-left
                 b Favoritos
-            div.float-end
-                select.tipo-pesquisa(name='tipo', style="width: 300px")
+            div
+                select.tipo-pesquisa(name='tipo', style="width: 100%;")
                     option(value='rota-dest') Rota - Destino
                     option(value='rota-para') Rota - Paragem
                     option(value='autocarros') Autocarros
-                    option(value='paragens', selected="selected") Paragens
-        div#container-tabela-favoritos(style='display: none;')
-            div#tabela-favoritos
+                    option(value='paragens') Paragens
+            div#container-tabela-favoritos(style="padding: 10px 0 0 0;height: 100%")
+                div#tabela-favoritos(style="height: 100%")
         include includes/footer
     script.
         $('.tipo-pesquisa').select2();
@@ -93,12 +91,14 @@ html(lang="en")
                 const dadosTabela = [
                     {
                         nome: "Cais do Sodré",
+                        id: 1,
                         autocarros: "612",
                         data: "15 Mar, 8:56 (2021)",
                         apagar: "<i class=\"far fa-trash-alt\"></i>"
                     },
                     {
                         nome: "Oriente",
+                        id: 2,
                         autocarros: "7",
                         data: "13 Mai, 8:56 (2021)",
                         apagar: "<i class=\"far fa-trash-alt\"></i>"
@@ -133,7 +133,13 @@ html(lang="en")
                                 )
                             }
                         },
-                        {title: "Nome", field: "nome"},
+                        {title: "Nome", field: "nome", formatter: "link",
+                            formatterParams: {
+                                labelField: "nome",
+                                urlPrefix: "/paragem/",
+                                urlField: "id"
+                            }
+                        },
                         {title: "Autocarros", field: "autocarros", formatter: "link",
                             formatterParams: {
                                 labelField: "autocarros",

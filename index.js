@@ -89,4 +89,8 @@ app.get('/criarconta', function(req, res){
     res.render('registar');
 });
 
+app.get('/paragem/:id', function(req, res){
+    res.render('paragem', { id: req.params.id, token: process.env.MAPQUEST_TOKEN });
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}`))

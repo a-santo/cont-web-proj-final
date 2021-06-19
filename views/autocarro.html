@@ -39,7 +39,7 @@ $(document).ready(function () {
 });</script><h3 class="text-center">Autocarro número </h3><div id="mapa" style="height: 680px;"></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><br><a href="/contacto"><i class="fas fa-envelope fa-3x"></i></a></div></footer></body><script>$(document).ready(function () {
     const id = 
     L.mapquest.key = '';
-    var mapa = L.mapquest.map('mapa', {
+    let mapa = L.mapquest.map('mapa', {
         center: [38.7052, -9.1586],
         layers: L.mapquest.tileLayer('map'),
         zoom: 16
