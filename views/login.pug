@@ -7,40 +7,60 @@ html(lang="en")
           .row
             .col-md-4
             .col-md-4
-              form.border.border-light.p-5
-              p.h4.mb-4.text-center 
-                b Iniciar Sessão
-              input#defaultLoginFormEmail.form-control.mb-4(type='email' placeholder='E-mail')
-              input#defaultLoginFormPassword.form-control.mb-4(type='password' placeholder='Palavra Passe')
-              .d-flex.justify-content-between
-                div
-                  .custom-control.custom-checkbox
-                    input#defaultLoginFormRemember.custom-control-input(type='checkbox')
-                    label.custom-control-label(for='defaultLoginFormRemember') 
-                        b &nbsp;Manter Sessão Iniciada
-                div
-                  a(href='') 
-                    b Esqueceu-se da palavra passe?
-              button.btn.btn-success.btn-block.my-4(type='submit') Iniciar Sessão
-              .text-center
-                p
-                  b Não tem conta?
-                  a(href='') 
-                    b &nbsp;Registe-se!
-                p 
-                    b ou inicie sessão com:
-                a.light-blue-text.mx-2(type='button')
-                  i.fab.fa-facebook-f.fa-2x
-                a.light-blue-text.mx-2(type='button')
-                  i.fab.fa-twitter.fa-2x
-                a.light-blue-text.mx-2(type='button')
-                  i.fab.fa-linkedin-in.fa-2x
-                a.light-blue-text.mx-2(type='button')
-                  i.fab.fa-github.fa-2x
+              form#login.border.border-light.p-5
+                  p.h4.mb-4.text-center
+                    b Iniciar Sessão
+                  input#email.form-control.mb-4(type='email' name='email' placeholder='E-mail' required="true")
+                  input#password.form-control.mb-4(type='password' name='password' placeholder='Palavra Passe' required="true")
+                  .d-flex.justify-content-between
+                    div
+                      .custom-control.custom-checkbox
+                        input#lembrarSessao.custom-control-input(type='checkbox', name='lembrarSessao')
+                        label.custom-control-label(for='lembrarSessao')
+                            b &nbsp;Manter Sessão Iniciada (24 horas)
+                    div
+                      a(href='')
+                        b Esqueceu-se da palavra passe?
+                  button#iniciar.btn.btn-success.btn-block.my-4(type='submit') Iniciar Sessão
+                  .text-center
+                    p
+                      b Não tem conta?
+                      a(href='')
+                        b &nbsp;Registe-se!
+                    p
+                        b ou inicie sessão com:
+                    a.light-blue-text.mx-2(type='button', style="color:inherit;")
+                      i.fab.fa-facebook-f.fa-3x
+                    a.light-blue-text.mx-2(type='button', style="color:inherit;")
+                      i.fab.fa-google.fa-3x
             .col-md-4
         br
         br
         include includes/footer
     script.
         $(document).ready(function () {
+            $("#login").submit(function (e) {
+                e.preventDefault();
+                let form = $(this);
+                console.warn(form.serialize())
+                $.ajax({
+                    type: "POST",
+                    url: '/login',
+                    data: form.serialize(),
+                    success: function (redirectTo) {
+                        window.location.href = redirectTo
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Não foi possível iniciar sessão! Por favor verifique os seus dados e tente novamente',
+                            footer: '<a href="/">Esqueceu-se dos seus detalhes de sessão? Reponha-os.</a>'
+                        })
+                    }
+                });
+
+
+            });
+
         });

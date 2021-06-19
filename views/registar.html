@@ -36,63 +36,34 @@ $(document).ready(function () {
             }
         })
     });
-});</script><div class="mt-3 mb-3 container"><div class="form" id="pesquisa"><div class="input-group"><select class="tipo-pesquisa" name="tipo"><option value="RTDEST">Rota - Destino</option><option value="RTPARA">Rota - Paragem</option><option value="AUTOCARRO">Autocarro</option><option value="PARAGEM">Paragem</option></select><input class="form-control rounded" type="search" placeholder="Pesquisar" aria-label="Search" aria-describedby="search-addon"><button class="btn btn-success" type="button" id="pesquisar">Pesquisar</button></div></div><div id="container-tabela" style="display: none;"><br><br><div id="tabela"></div></div></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><br><a href="/contacto"><i class="fas fa-envelope fa-3x"></i></a></div></footer></body><script>$(document).ready(function () {
-    setTipoPesquisa('', '.tipo-pesquisa')
-    $('.tipo-pesquisa').select2();
-    // A select2 não mete a altura certa.. Para ver mais tarde
-    $(".select2-container").css('height', '35px');
-    $(".select2-selection").css('height', '35px');
-    $("#pesquisar").click(function () {
-        let escolha = $('.tipo-pesquisa').find(":selected").val();
-        if (escolha === 'PARAGEM') {
-            var tabledata = [
-                {
-                    nome: "Paragem B - Sul",
-                    autocarros: "612",
-                    estado: 3,
-                    update: "15 Mar, 8:56 (2021)"
-                },
-                {
-                    nome: "Paragem B - Norte",
-                    autocarros: "612",
-                    estado: 5,
-                    update: "12 Feb, 7:12 (2021)"
-                }
-            ];
-            let table = new Tabulator("#tabela", {
-                data: tabledata,           //load row data from array
-                layout: "fitColumns",      //fit columns to width of table
-                responsiveLayout: "hide",  //hide columns that dont fit on the table
-                tooltips: true,            //show tool tips on cells
-                addRowPos: "top",          //when adding a new row, add it to the top of the table
-                history: true,             //allow undo and redo actions on the table
-                pagination: "local",       //paginate the data
-                paginationSize: 7,         //allow 7 rows per page of data
-                movableColumns: true,      //allow column order to be changed
-                resizableRows: true,       //allow row order to be changed
-                initialSort: [             //set the initial sort order of the data
-                    {column: "nome", dir: "asc"},
-                ],
-                columns: [                 //define the table columns
-                    {title: "Nome", field: "nome"},
-                    {title: "Autocarros", field: "autocarros", formatter: "link",
-                        formatterParams: {
-                            labelField: "autocarros",
-                            urlPrefix: "/autocarro/",
-                            urlField: "autocarros"
-                        }
-                    },
-                    {
-                        title: "Estado da Paragem",
-                        field: "estado",
-                        formatter: "star",
-                        hozAlign: "center",
-                        width: 100
-                    },
-                    {title: "Última Atualização", field: "update"}
-                ],
-            });
-            $("#container-tabela").show()
-        }
+});</script><div class="container-fluid"><div class="row"><div class="col-md-4"></div><div class="col-md-4"><form class="border border-light p-5" id="registar"><p class="h4 mb-4 text-center">Criar Conta</p><label for="nomeInput">Nome</label><input class="form-control mb-4" id="nomeInput" type="text" required="true"><label for="emailInput">Endere&ccedil;o de e-mail</label><input class="form-control mb-4" id="emailInput" type="email" required="true"><label for="passwdInput">Palavra-passe</label><input class="form-control mb-4" id="passwdInput" type="password" required="true" minlength="8"><label for="passwdInputDois">Palavra-passe</label><input class="form-control mb-4" id="passwdInputDois" type="password" required="true" minlength="8"><small class="form-text text-muted mb-4" id="defaultRegisterFormPhoneHelpBlock">Mínimo 8 caracteres</small><button class="btn btn-success my-4 btn-block" type="submit">Criar conta</button><div class="text-center"><p>ou crie conta através de:</p><a class="light-blue-text mx-2" type="button" style="color:inherit;"><i class="fab fa-facebook-f fa-3x"></i></a><a class="light-blue-text mx-2" type="button" style="color:inherit;"><i class="fab fa-google fa-3x"></i></a></div></form></div><div class="col-md-4"></div></div></div><footer class="text-center text-lg-start bg-light text-muted"><div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);"><b>&copy; 2021 Copyright Bus4You&reg;</b><br><a href="/contacto"><i class="fas fa-envelope fa-3x"></i></a></div></footer></body><script>$(document).ready(function () {
+    $("#registar").submit(function (e) {
+        e.preventDefault();
+        let form = $(this);
+        console.warn(form.serialize())
+        $.ajax({
+            type: "POST",
+            url: '/login',
+            data: {email: 'teste@teste.com', password: 'teste'},
+            success: function () {
+                Swal.fire(
+                    'Conta criada!',
+                    'A sua conta foi criada com sucesso.',
+                    'success'
+                ).then(function () {
+                    window.location.href = '/'
+                })
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Não foi possível criar conta! Por favor verifique os seus dados e tente novamente'
+                })
+            }
+        });
+
+
     });
+
 });</script></html>

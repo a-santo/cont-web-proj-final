@@ -37,25 +37,61 @@ header#header
                     a#botaoAreaDeUtilizador.dropdown-toggle.d-flex.align-items-center.hidden-arrow(href='#' role='button' data-mdb-toggle='dropdown' aria-expanded='false' style='color:red')
                         i.far.fa-user-circle.fa-2x
                     ul.dropdown-menu.dropdown-menu-dark.dropdown-menu-end(aria-labelledby='navbarDropdownMenuLink')
-                        li
+                        li.sessao
                             b.dropdown-item-text Conta
-                        li
+                        li.sessao
                             a.dropdown-item(href='/preferencias') Preferências
-                        li
+                        li.sessao
                             a.dropdown-item(href='/favoritos') Favoritos
-                        li
+                        li.sessao
                             a.dropdown-item(href='/registo') Registo
-                        li
+                        li.sessao
                             hr.dropdown-divider
-                        li
-                            b.dropdown-item-text Outros
-                        li
-                            a.dropdown-item(href='#') Terminar Sessão
+                        li.sessao
+                            a#terminar-sessao.dropdown-item(href='/logout') Terminar Sessão
+                        li.semsessao
+                            a.dropdown-item(href='/login') Iniciar Sessão
+                        li.semsessao
+                            a.dropdown-item(href='/criarconta') Criar Conta
 
 script.
+    if (document.cookie.indexOf('sessao=') !== -1) {
+        $('#botaoAreaDeUtilizador').css('color', 'green');
+        $('.sessao').addClass('d-block');
+        $('.semsessao').addClass('d-none');
+    } else {
+        $('.semsessao').addClass('d-block');
+        $('.sessao').addClass('d-none');
+    }
     $(document).ready(function () {
-        if (document.cookie.indexOf('loggedIn=') !== -1) {
-            $('#botaoAreaDeUtilizador').css('color', 'green');
-        }
+        document.getElementById("terminar-sessao").addEventListener("click", async function (e) {
+            e.preventDefault();
+            await Swal.fire({
+                title: 'Terminar sessão',
+                text: "Tem a certeza que deseja terminar a sessão?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: "Não",
+                confirmButtonText: 'Sim'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/logout",
+                        type: 'GET',
+                        success: function (res) {
+                            Swal.fire(
+                                'Sessão Terminada!',
+                                'A sessão foi terminada com sucesso.',
+                                'success'
+                            ).then(function () {
+                                window.location.href = '/'
+                            })
+                        }
+                    });
+                }
+            })
+        });
     });
 

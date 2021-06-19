@@ -1,0 +1,61 @@
+doctype html
+html(lang="en")
+    include includes/head
+    body
+        include includes/header
+        .container-fluid
+            .row
+                .col-md-4
+                .col-md-4
+                    form#registar.border.border-light.p-5
+                        p.h4.mb-4.text-center Criar Conta
+                        label(for='nomeInput') Nome
+                        input#nomeInput.form-control.mb-4(type='text' required='true')
+                        label(for='emailInput') Endere&ccedil;o de e-mail
+                        input#emailInput.form-control.mb-4(type='email' required='true')
+                        label(for='passwdInput') Palavra-passe
+                        input#passwdInput.form-control.mb-4(type='password' required='true' minlength="8")
+                        label(for='passwdInputDois') Palavra-passe
+                        input#passwdInputDois.form-control.mb-4(type='password' required='true' minlength="8")
+                        small#defaultRegisterFormPhoneHelpBlock.form-text.text-muted.mb-4 Mínimo 8 caracteres
+                        button.btn.btn-success.my-4.btn-block(type='submit') Criar conta
+                        .text-center
+                            p ou crie conta através de:
+                            a.light-blue-text.mx-2(type='button', style="color:inherit;")
+                                i.fab.fa-facebook-f.fa-3x
+                            a.light-blue-text.mx-2(type='button', style="color:inherit;")
+                                i.fab.fa-google.fa-3x
+                .col-md-4
+        include includes/footer
+    script.
+        $(document).ready(function () {
+            $("#registar").submit(function (e) {
+                e.preventDefault();
+                let form = $(this);
+                console.warn(form.serialize())
+                $.ajax({
+                    type: "POST",
+                    url: '/login',
+                    data: {email: 'teste@teste.com', password: 'teste'},
+                    success: function () {
+                        Swal.fire(
+                            'Conta criada!',
+                            'A sua conta foi criada com sucesso.',
+                            'success'
+                        ).then(function () {
+                            window.location.href = '/'
+                        })
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Não foi possível criar conta! Por favor verifique os seus dados e tente novamente'
+                        })
+                    }
+                });
+
+
+            });
+
+        });

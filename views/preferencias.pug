@@ -23,7 +23,7 @@ html(lang="en")
                         option(value='3') Autocarro
                         option(value='4') Paragem
                       br
-                      small#helper.form-text.text-muted.mb-4 Registo de pesquisas a manter
+                      small#helper-one.form-text.text-muted.mb-4 Registo de pesquisas a manter
                       .custom-control.custom-checkbox.mb-1
                         input#rota-dest-chk.custom-control-input(type='checkbox')
                         label.custom-control-label(for='rota-dest-chk') &nbsp;Rota - Destino
@@ -42,16 +42,16 @@ html(lang="en")
                         option(value='1') 500
                         option(value='2') 1000
                         option(value='3') 1500
-                      small#helper.form-text.text-muted.mb-4 Estat&iacute;sticas preferidas a apresentar
+                      small#helper-two.form-text.text-muted.mb-4 Estat&iacute;sticas preferidas a apresentar
                       .custom-control.custom-radio.mb-1
-                        input#radio.custom-control-input(type='radio' name='custom-control-input')
-                        label.custom-control-label(for='radio') &nbsp;Total
+                        input#radio-one.custom-control-input(type='radio' name='custom-control-input')
+                        label.custom-control-label(for='radio-one') &nbsp;Total
                       .custom-control.custom-radio.mb-1
-                        input#radio.custom-control-input(type='radio' name='custom-control-input')
-                        label.custom-control-label(for='radio') &nbsp;Total Di&aacute;rio
+                        input#radio-two.custom-control-input(type='radio' name='custom-control-input')
+                        label.custom-control-label(for='radio-two') &nbsp;Total Di&aacute;rio
                       .custom-control.custom-radio.mb-1
-                        input#radio.custom-control-input(type='radio' name='custom-control-input')
-                        label.custom-control-label(for='radio') &nbsp;&Uacute;ltimos 7 dias
+                        input#radio-three.custom-control-input(type='radio' name='custom-control-input')
+                        label.custom-control-label(for='radio-three') &nbsp;&Uacute;ltimos 7 dias
                       button#apagar.btn.btn-danger.btn-small APAGAR CONTA
               br
               button#guardar.btn.btn-success.btn-block(type='submit') Guardar Alterações
@@ -69,7 +69,7 @@ html(lang="en")
             document.getElementById("apagar").addEventListener("click", function () {
                 gerarConfirmacao(
                     'Tem a certeza que deseja apagar a sua conta?',
-                    '<h2><span style="color: red"><b>ESTA ACÇÃO É IRREVERSÍVEL!</b></span></h2><br>Não será possível recuperar a sua conta!',
+                    '<h4><span style="color: red"><b>ESTA ACÇÃO É IRREVERSÍVEL!</b></span></h4><br>Não será possível recuperar a sua conta!',
                     'danger',
                     'Conta apagada!',
                     'A sua conta foi apagada com sucesso. Até sempre!',
@@ -78,11 +78,16 @@ html(lang="en")
                 )
             });
             document.getElementById("guardar").addEventListener("click", function () {
-                Swal.fire(
-                    "Sucesso!",
-                    "Preferências guardadas com sucesso.",
-                    "success"
-                )
+                let notyf = new Notyf();
+                notyf.success({
+                    message: 'As suas preferências foram guardadas com sucesso!',
+                    dismissible: true,
+                    duration: 4000,
+                    position: {
+                        x: 'center',
+                        y: 'top',
+                    }
+                });
             });
             
         });

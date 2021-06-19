@@ -9,20 +9,19 @@ html(lang="en")
             .col-md-4
               form.border.border-light.p-5
                 p.h4.mb-4.text-center Contacte-nos
-                input#defaultContactFormName.form-control.mb-4(type='text' placeholder='Nome')
-                input#defaultContactFormEmail.form-control.mb-4(type='email' placeholder='E-mail')
-                label(for='defaultSelect') 
+                input#defaultContactFormName.form-control.mb-4(type='text' placeholder='Nome', required="true")
+                input#defaultContactFormEmail.form-control.mb-4(type='email' placeholder='E-mail', required="true")
+                label(for='defaultSelect')
                   b Assunto
                 br
                 select#defaultSelect.tipo-pesquisa(style="width: 100%;")
-                  option(value='' disabled='') Escolha uma opção
                   option(value='1' selected='') Feedback
                   option(value='2') Denunciar um bug
                   option(value='3') Sugerir novas funcionalidades
                   option(value='4') Outros
                 br
                 br
-                textarea#exampleFormControlTextarea2.form-control.rounded-0(rows='3' placeholder='Message')
+                textarea#exampleFormControlTextarea2.form-control.rounded-0(rows='3' placeholder='Mensagem', required="true")
                 .custom-control.custom-checkbox.mb-4
                   input#defaultContactFormCopy.custom-control-input(type='checkbox')
                   label.custom-control-label(for='defaultContactFormCopy')
