@@ -47,14 +47,18 @@ html(lang="en")
                       small#helper-two.form-text.text-muted.mb-4 Estat&iacute;sticas preferidas a apresentar
                       .custom-control.custom-radio.mb-1
                         input#radio-one.custom-control-input(type='radio' name='custom-control-input')
-                        label.custom-control-label(for='radio-one') &nbsp;Total
+                        label.custom-control-label(for='radio-one') &nbsp;
+                            span.badge.bg-success Total
                       .custom-control.custom-radio.mb-1
                         input#radio-two.custom-control-input(type='radio' name='custom-control-input')
-                        label.custom-control-label(for='radio-two') &nbsp;Total Di&aacute;rio
+                        label.custom-control-label(for='radio-two') &nbsp;
+                            span.badge.bg-info Total Di&aacute;rio
                       .custom-control.custom-radio.mb-1
                         input#radio-three.custom-control-input(type='radio' name='custom-control-input')
-                        label.custom-control-label(for='radio-three') &nbsp;&Uacute;ltimos 7 dias
-                      button#apagar.btn.btn-danger.btn-small APAGAR CONTA
+                        label.custom-control-label(for='radio-three') &nbsp;
+                            span.badge.bg-warning &Uacute;ltimos 7 dias
+                      hr
+                      button#apagar.btn.btn-danger.btn-small.float-end APAGAR CONTA
               br
               button#guardar.btn.btn-success.btn-block(type='submit') Guardar Alterações
 
