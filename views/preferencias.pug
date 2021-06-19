@@ -6,8 +6,10 @@ html(lang="en")
         .mt-3.mb-3.container
             form.border.border-light.p-5
               p.h4.mb-4.text-center Preferências
+              label(for='nome') Nome
+              input#nome.form-control.mb-4(type='email' placeholder='André Valério')
               label(for='email') Endere&ccedil;o de e-mail
-              input#email.form-control.mb-4(type='email' placeholder='André Valério')
+              input#email.form-control.mb-4(type='email' placeholder='teste@teste.com')
               label(for='password-um') Nova palavra-passe
               input#password-um.form-control.mb-4(type='password' placeholder='**********')
               label(for='password-dois') Digite novamente a nova palavra-passe
