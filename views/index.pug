@@ -76,6 +76,195 @@ html(lang="en")
                         ],
                     });
                     $("#container-tabela").show()
+                } else if (escolha === 'AUTOCARRO') {
+                    var tabledata = [
+                        {
+                            id: 202,
+                            inicio: "Cais do Sodré",
+                            fim: "Bairro Padre Cruz",
+                            proximaParagem: 'Rato',
+                            tempoEstimado: '10 minutos'
+                        }
+                    ];
+                    let table = new Tabulator("#tabela", {
+                        data: tabledata,           //load row data from array
+                        layout: "fitColumns",      //fit columns to width of table
+                        responsiveLayout: "hide",  //hide columns that dont fit on the table
+                        tooltips: true,            //show tool tips on cells
+                        addRowPos: "top",          //when adding a new row, add it to the top of the table
+                        history: true,             //allow undo and redo actions on the table
+                        pagination: "local",       //paginate the data
+                        paginationSize: 7,         //allow 7 rows per page of data
+                        movableColumns: true,      //allow column order to be changed
+                        resizableRows: true,       //allow row order to be changed
+                        initialSort: [             //set the initial sort order of the data
+                            {column: "nome", dir: "asc"},
+                        ],
+                        columns: [
+                            {
+                                title: "Número", field: "id", formatter: "link",
+                                formatterParams: {
+                                    labelField: "id",
+                                    urlPrefix: "/autocarro/",
+                                    urlField: "id"
+                                }
+                            },
+                            {title: "Início", field: "inicio"},
+                            {title: "Fim", field: "fim"},
+                            {title: "Próxima Paragem", field: "proximaParagem"},
+                            {title: "Chegada Prevista", field: "tempoEstimado"}
+                        ],
+                    });
+                    $("#container-tabela").show()
+                } else if (escolha === 'RTDEST') {
+                    var tabledata = [
+                        {
+                            id: 7602,
+                            nome: 'Aeroporto',
+                            autocarro: 722,
+                            inicio: "Praça de Londres",
+                            fim: "Portela",
+                            proximaParagem: 'Quinta de Santo António',
+                            tempoEstimado: 2
+                        },
+                        {
+                            id: 7602,
+                            nome: 'Aeroporto',
+                            autocarro: 783,
+                            inicio: "Amoreiras",
+                            fim: "Portela/Pr. Velho",
+                            proximaParagem: 'Marquês de Pombal',
+                            tempoEstimado: 12
+                        },
+                        {
+                            id: 7602,
+                            nome: 'Aeroporto',
+                            autocarro: 722,
+                            inicio: "Praça de Londres",
+                            fim: "Portela",
+                            proximaParagem: 'Praça de Londres',
+                            tempoEstimado: 26
+                        }
+                    ];
+                    let table = new Tabulator("#tabela", {
+                        data: tabledata,           //load row data from array
+                        layout: "fitColumns",      //fit columns to width of table
+                        responsiveLayout: "hide",  //hide columns that dont fit on the table
+                        tooltips: true,            //show tool tips on cells
+                        addRowPos: "top",          //when adding a new row, add it to the top of the table
+                        history: true,             //allow undo and redo actions on the table
+                        pagination: "local",       //paginate the data
+                        paginationSize: 7,         //allow 7 rows per page of data
+                        movableColumns: true,      //allow column order to be changed
+                        resizableRows: true,       //allow row order to be changed
+                        initialSort: [             //set the initial sort order of the data
+                            {column: "nome", dir: "asc"},
+                        ],
+                        columns: [
+                            {title: "Nome", field: "nome"},
+                            {
+                                title: "Autocarro", field: "autocarro", formatter: "link",
+                                formatterParams: {
+                                    labelField: "autocarro",
+                                    urlPrefix: "/autocarro/",
+                                    urlField: "autocarro"
+                                }
+                            },
+                            {title: "Início", field: "inicio"},
+                            {title: "Fim", field: "fim"},
+                            {title: "Próxima Paragem", field: "proximaParagem"},
+                            {title: "Chegada Prevista (minutos)", field: "tempoEstimado"}
+                        ],
+                    });
+                    $("#container-tabela").show()
+                } else if (escolha === 'RTPARA') {
+                    var tabledata = [
+                        {
+                            id: 410,
+                            nome: '410 - Alameda D. A. Henriques',
+                            autocarro: 717,
+                            inicio: "Pç. Chile",
+                            fim: "Fetais",
+                            proximaParagem: 'Estádio 1º de Maio',
+                            tempoEstimado: 6
+                        },
+                        {
+                            id: 410,
+                            nome: '410 - Alameda D. A. Henriques',
+                            autocarro: 717,
+                            inicio: "Pç. Chile",
+                            fim: "Fetais",
+                            proximaParagem: 'Av. Estados Unidos América',
+                            tempoEstimado: 7
+                        },
+                        {
+                            id: 410,
+                            nome: '410 - Alameda D. A. Henriques',
+                            autocarro: 708,
+                            inicio: "Martim Moniz",
+                            fim: "Sacavém",
+                            proximaParagem: 'Qta. Narigão',
+                            tempoEstimado: 10
+                        },
+                        {
+                            id: 402,
+                            nome: '402 - Alameda D. A. Henriques ',
+                            autocarro: 797,
+                            inicio: "Alameda",
+                            fim: "Sapadores",
+                            proximaParagem: 'Sapadores',
+                            tempoEstimado: 5
+                        },
+                        {
+                            id: 402,
+                            nome: '402 - Alameda D. A. Henriques ',
+                            autocarro: 735,
+                            inicio: "Cais do Sodré",
+                            fim: "Hospital de Santa Maria",
+                            proximaParagem: 'Cais do Sodré',
+                            tempoEstimado: 8
+                        },
+                        {
+                            id: 402,
+                            nome: '402 - Alameda D. A. Henriques ',
+                            autocarro: 718,
+                            inicio: "ISEL",
+                            fim: "Est. Roma-Areeiro",
+                            proximaParagem: 'ISEL',
+                            tempoEstimado: 23
+                        },
+                    ];
+                    let table = new Tabulator("#tabela", {
+                        data: tabledata,           //load row data from array
+                        layout: "fitColumns",      //fit columns to width of table
+                        responsiveLayout: "hide",  //hide columns that dont fit on the table
+                        tooltips: true,            //show tool tips on cells
+                        addRowPos: "top",          //when adding a new row, add it to the top of the table
+                        history: true,             //allow undo and redo actions on the table
+                        pagination: "local",       //paginate the data
+                        paginationSize: 7,         //allow 7 rows per page of data
+                        movableColumns: true,      //allow column order to be changed
+                        resizableRows: true,       //allow row order to be changed
+                        initialSort: [             //set the initial sort order of the data
+                            {column: "nome", dir: "asc"},
+                        ],
+                        columns: [
+                            {title: "Nome", field: "nome"},
+                            {
+                                title: "Autocarro", field: "autocarro", formatter: "link",
+                                formatterParams: {
+                                    labelField: "autocarro",
+                                    urlPrefix: "/autocarro/",
+                                    urlField: "autocarro"
+                                }
+                            },
+                            {title: "Início", field: "inicio"},
+                            {title: "Fim", field: "fim"},
+                            {title: "Próxima Paragem", field: "proximaParagem"},
+                            {title: "Chegada Prevista (minutos)", field: "tempoEstimado"}
+                        ],
+                    });
+                    $("#container-tabela").show()
                 }
             });
         });
