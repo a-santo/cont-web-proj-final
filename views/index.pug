@@ -33,13 +33,15 @@ html(lang="en")
                             nome: "Paragem B - Sul",
                             autocarros: "612",
                             estado: 3,
-                            update: "15 Mar, 8:56 (2021)"
+                            update: "15 Mar, 8:56 (2021)",
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             nome: "Paragem B - Norte",
                             autocarros: "612",
                             estado: 5,
-                            update: "12 Feb, 7:12 (2021)"
+                            update: "12 Feb, 7:12 (2021)",
+                            favorito: "<i class=\"far fa-star\"></i>"
                         }
                     ];
                     let table = new Tabulator("#tabela", {
@@ -72,7 +74,38 @@ html(lang="en")
                                 hozAlign: "center",
                                 width: 100
                             },
-                            {title: "Última Atualização", field: "update"}
+                            {title: "Última Atualização", field: "update"},
+                            {
+                                title: "Favorito", field: "favorito",
+                                formatter: "html", align: "center", cellClick: function (e, cell) {
+                                    if (cell.getValue() === "<i class=\"far fa-star\"></i>") {
+                                        cell.setValue('<i class="fas fa-star" style="color:gold"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Esta paragem foi adicionada aos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    } else {
+                                        cell.setValue('<i class="far fa-star"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Esta paragem foi removida dos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
                         ],
                     });
                     $("#container-tabela").show()
@@ -83,7 +116,8 @@ html(lang="en")
                             inicio: "Cais do Sodré",
                             fim: "Bairro Padre Cruz",
                             proximaParagem: 'Rato',
-                            tempoEstimado: '10 minutos'
+                            tempoEstimado: '10 minutos',
+                            favorito: "<i class=\"far fa-star\"></i>"
                         }
                     ];
                     let table = new Tabulator("#tabela", {
@@ -112,7 +146,37 @@ html(lang="en")
                             {title: "Início", field: "inicio"},
                             {title: "Fim", field: "fim"},
                             {title: "Próxima Paragem", field: "proximaParagem"},
-                            {title: "Chegada Prevista", field: "tempoEstimado"}
+                            {title: "Chegada Prevista", field: "tempoEstimado"},
+                            {
+                                title: "Favorito", field: "favorito",
+                                formatter: "html", align: "center", cellClick: function (e, cell) {
+                                    if (cell.getValue() === "<i class=\"far fa-star\"></i>") {
+                                        cell.setValue('<i class="fas fa-star" style="color:gold"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Este autocarro foi adicionado aos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    } else {
+                                        cell.setValue('<i class="far fa-star"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Este autocarro foi removido dos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    }
+                                }
+                            }
                         ],
                     });
                     $("#container-tabela").show()
@@ -125,7 +189,8 @@ html(lang="en")
                             inicio: "Praça de Londres",
                             fim: "Portela",
                             proximaParagem: 'Quinta de Santo António',
-                            tempoEstimado: 2
+                            tempoEstimado: 2,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 7602,
@@ -134,7 +199,8 @@ html(lang="en")
                             inicio: "Amoreiras",
                             fim: "Portela/Pr. Velho",
                             proximaParagem: 'Marquês de Pombal',
-                            tempoEstimado: 12
+                            tempoEstimado: 12,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 7602,
@@ -143,7 +209,8 @@ html(lang="en")
                             inicio: "Praça de Londres",
                             fim: "Portela",
                             proximaParagem: 'Praça de Londres',
-                            tempoEstimado: 26
+                            tempoEstimado: 26,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         }
                     ];
                     let table = new Tabulator("#tabela", {
@@ -173,7 +240,38 @@ html(lang="en")
                             {title: "Início", field: "inicio"},
                             {title: "Fim", field: "fim"},
                             {title: "Próxima Paragem", field: "proximaParagem"},
-                            {title: "Chegada Prevista (minutos)", field: "tempoEstimado"}
+                            {title: "Chegada Prevista (minutos)", field: "tempoEstimado"},
+                            {
+                                title: "Favorito", field: "favorito",
+                                formatter: "html", align: "center", cellClick: function (e, cell) {
+                                    if (cell.getValue() === "<i class=\"far fa-star\"></i>") {
+                                        cell.setValue('<i class="fas fa-star" style="color:gold"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Esta rota foi adicionada aos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    } else {
+                                        cell.setValue('<i class="far fa-star"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Esta rota foi removida dos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
                         ],
                     });
                     $("#container-tabela").show()
@@ -186,7 +284,8 @@ html(lang="en")
                             inicio: "Pç. Chile",
                             fim: "Fetais",
                             proximaParagem: 'Estádio 1º de Maio',
-                            tempoEstimado: 6
+                            tempoEstimado: 6,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 410,
@@ -195,7 +294,8 @@ html(lang="en")
                             inicio: "Pç. Chile",
                             fim: "Fetais",
                             proximaParagem: 'Av. Estados Unidos América',
-                            tempoEstimado: 7
+                            tempoEstimado: 7,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 410,
@@ -204,7 +304,8 @@ html(lang="en")
                             inicio: "Martim Moniz",
                             fim: "Sacavém",
                             proximaParagem: 'Qta. Narigão',
-                            tempoEstimado: 10
+                            tempoEstimado: 10,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 402,
@@ -213,7 +314,8 @@ html(lang="en")
                             inicio: "Alameda",
                             fim: "Sapadores",
                             proximaParagem: 'Sapadores',
-                            tempoEstimado: 5
+                            tempoEstimado: 5,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 402,
@@ -222,7 +324,8 @@ html(lang="en")
                             inicio: "Cais do Sodré",
                             fim: "Hospital de Santa Maria",
                             proximaParagem: 'Cais do Sodré',
-                            tempoEstimado: 8
+                            tempoEstimado: 8,
+                            favorito: "<i class=\"far fa-star\"></i>"
                         },
                         {
                             id: 402,
@@ -231,8 +334,9 @@ html(lang="en")
                             inicio: "ISEL",
                             fim: "Est. Roma-Areeiro",
                             proximaParagem: 'ISEL',
-                            tempoEstimado: 23
-                        },
+                            tempoEstimado: 23,
+                            favorito: "<i class=\"far fa-star\"></i>"
+                        }
                     ];
                     let table = new Tabulator("#tabela", {
                         data: tabledata,           //load row data from array
@@ -261,7 +365,38 @@ html(lang="en")
                             {title: "Início", field: "inicio"},
                             {title: "Fim", field: "fim"},
                             {title: "Próxima Paragem", field: "proximaParagem"},
-                            {title: "Chegada Prevista (minutos)", field: "tempoEstimado"}
+                            {title: "Chegada Prevista (minutos)", field: "tempoEstimado"},
+                            {
+                                title: "Favorito", field: "favorito",
+                                formatter: "html", align: "center", cellClick: function (e, cell) {
+                                    if (cell.getValue() === "<i class=\"far fa-star\"></i>") {
+                                        cell.setValue('<i class="fas fa-star" style="color:gold"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Esta rota foi adicionada aos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    } else {
+                                        cell.setValue('<i class="far fa-star"></i>')
+                                        let notyf = new Notyf();
+                                        notyf.success({
+                                            message: 'Esta rota foi removida dos seus favoritos!',
+                                            dismissible: true,
+                                            duration: 2000,
+                                            position: {
+                                                x: 'center',
+                                                y: 'top',
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
                         ],
                     });
                     $("#container-tabela").show()
