@@ -93,4 +93,12 @@ app.get('/paragem/:id', function(req, res){
     res.render('paragem', { id: req.params.id, token: process.env.MAPQUEST_TOKEN });
 });
 
+app.get('/sobre', function(req, res){
+    res.render('sobre');
+});
+
+app.get('/estatisticas', function(req, res){
+    res.render('estatisticas');
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}`))
