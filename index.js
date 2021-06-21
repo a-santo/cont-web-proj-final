@@ -26,7 +26,12 @@ app.get('/autocarro/:id', function(req, res){
 });
 
 app.get('/registo', function(req, res){
-    res.render('registo');
+    if(req.session.loggedIn) {
+        res.render('registo');
+    } else {
+        req.session.redirect = '/registo'
+        res.redirect('/login');
+    }
 });
 
 app.get('/favoritos', function(req, res){

@@ -3,7 +3,10 @@ html(lang="en")
     include includes/head
     body
         include includes/header
-        h3.text-center Ver Paragem
+        if id === '1'
+            h3.text-center Paragem: Avenida 24 de Julho
+        else
+            h3.text-center Paragem: Gare do Oriente
         div#mapa(style="height: 680px;")
         include includes/footer
     script.
